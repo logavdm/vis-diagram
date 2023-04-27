@@ -1,0 +1,81 @@
+<app-rule-filter></app-rule-filter>
+
+<c-row>
+    <c-col xs="12">
+        <c-card class="mb-4">
+          
+          <c-card-body class="text-center">
+            <ng-template [ngIf]="rules?.length" [ngIfElse]="loading">
+              <table cTable [responsive]="true" [bordered]="true" [hover]="true" cAlign="middle" small>
+                <thead cTableColor="dark" small>
+                <tr>
+                  <th scope="col">Sno</th>
+                  <th scope="col">Group</th>
+                  <th scope="col">Seq</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Rule</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Success Grp</th>
+                  <th scope="col">Failed Grp</th>
+                  <th scope="col">Result</th>
+                  <th scope="col">Version</th>
+                </tr>
+                </thead>
+                <tbody small>
+                  <ng-template ngFor let-x [ngForOf]="rules" let-i="index">
+                    <tr *ngIf="x.rule_seq==1 && i!=0" scope="row"><td colSpan="9"></td></tr>
+                  <tr scope="row" >
+                    <td>{{i+1}}</td>                                  
+                    <td *ngIf="x.rule_seq==1" [attr.rowspan]="getRowSpan(x.rule_grp)">{{x.rule_grp}}</td>                    
+                    <td>{{x.rule_seq}}</td>
+                    <td>{{x.rule_cfgname}}</td>
+                    <td>{{x.rule}}</td>
+                    <td>{{x.rule_type}}</td>
+                    <td>{{x.succes_grp}}</td>
+                    <td>{{x.fail_grp}}</td>
+                    <td>{{x.rule}}</td>
+                    <td>{{x.version}}</td>
+                  </tr>                  
+                </ng-template>
+                  </tbody>
+              </table>
+            </ng-template>
+
+            <ng-template #loading>
+              <table cTable [responsive]="true" [bordered]="true" [hover]="true" cAlign="middle" small>
+                <thead cTableColor="dark">
+                <tr>
+                  <th scope="col">Sno</th>
+                  <th scope="col">Group</th>
+                  <th scope="col">Seq</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Rule</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Result</th>
+                  <th scope="col">Version</th>
+                </tr>
+                </thead>
+              </table>
+              <h5 cCardTitle cPlaceholderAnimation="glow">
+                <span cCol="12" cPlaceholder></span>
+              </h5>
+              <p cCardText cPlaceholderAnimation="glow">
+                <span cCol xs="12" cPlaceholder class="me-1"></span>
+              </p>
+  
+              <c-col xs="12" class="text-center">
+                <p>Data not available</p>
+              </c-col>
+  
+              <p cCardText cPlaceholderAnimation="glow">
+                <span cCol xs="12" cPlaceholder></span>
+                <span cCol xs="12" cPlaceholder></span>
+              </p>  
+            </ng-template>
+
+          </c-card-body>
+        </c-card>
+      </c-col>
+
+</c-row>

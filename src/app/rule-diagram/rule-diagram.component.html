@@ -1,0 +1,380 @@
+<app-rule-filter></app-rule-filter>
+
+<c-card class="mb-4" id="networkbody">
+  <c-card-header>
+    <c-row>
+      <c-col class="text-end">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button
+            cButton
+            color="danger"
+            [cModalToggle]="addRuleGroup.id"
+            variant="ghost"
+            class="me-md-2"
+            size="sm"
+            cTooltip="Add new"
+          >
+            <svg [cIcon]="icons.cilPlus" size="md"></svg>
+          </button>
+          <button
+            cButton
+            color="danger"
+            variant="ghost"
+            size="sm"
+            cTooltip="edit"
+            disabled="true"
+          >
+            <svg [cIcon]="icons.cilPencil" size="md"></svg>
+          </button>
+        </div>
+      </c-col>
+    </c-row>
+  </c-card-header>
+
+  <c-card-body
+    style="background-image: url('https://img.freepik.com/premium-vector/abstract-carbon-fiber-texture-box-square-background_551880-1585.jpg');"
+  >
+    <div #mynetwork></div>
+  </c-card-body>
+
+  <c-card-footer>
+    <c-row>
+      <c-col>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          [active]="direction=='LR'?true:false"
+          (click)="changeDirection('LR')"
+          cTooltip="Right Growing Tree"
+        >
+          <svg [cIcon]="icons.cilChevronDoubleRight" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          [active]="direction=='UD'?true:false"
+          (click)="changeDirection('UD')"
+          cTooltip="Down Growing Tree"
+        >
+          <svg [cIcon]="icons.cilChevronDoubleDown" size="md"></svg>
+        </button>
+      </c-col>
+      <c-col class="text-end">
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="moveLeft()"
+          cTooltip="Move Left"
+        >
+          <svg [cIcon]="icons.cilArrowCircleLeft" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="moveRight()"
+          cTooltip="Move Right"
+        >
+          <svg [cIcon]="icons.cilArrowCircleRight" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="moveUp()"
+          cTooltip="Move Up"
+        >
+          <svg [cIcon]="icons.cilArrowCircleTop" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="moveDown()"
+          cTooltip="Move Down"
+        >
+          <svg [cIcon]="icons.cilArrowCircleBottom" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="zoomin()"
+          cTooltip="Zoom In"
+        >
+          <svg [cIcon]="icons.cilZoomIn" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="zoomout()"
+          cTooltip="Zoom Out"
+        >
+          <svg [cIcon]="icons.cilZoomOut" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="fitToScreen()"
+          cTooltip="Fit to screen"
+        >
+          <svg [cIcon]="icons.cilCompress" size="md"></svg>
+        </button>
+        <button
+          type="button"
+          cButton
+          color="grey"
+          variant="outline"
+          class="btn-circle"
+          (click)="toggleFullScreen()"
+          cTooltip="Full screen"
+        >
+          <svg
+            [cIcon]="fullScreenToggle?icons.cilFullscreenExit:icons.cilFullscreen"
+            size="md"
+          ></svg>
+        </button>
+      </c-col>
+    </c-row>
+  </c-card-footer>
+</c-card>
+
+<c-modal
+  #addRuleGroup
+  [scrollable]="true"
+  alignment="center"
+  id="addRuleGroup"
+  size="lg"
+  [fullscreen]="true"
+>
+  <c-modal-header>
+    <h5 cModalTitle>ADDING NEW RULE GROUP</h5>
+    <button [cModalToggle]="addRuleGroup.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <c-container>
+      <c-row [gutter]="2">
+        <c-card>
+          <c-card-header
+            ><c-col><b>Rule Group</b></c-col></c-card-header
+          >
+          <c-card-body>
+            <form cRow class="g-3 align-items-center">
+              <c-col [sm]="2">
+                <c-input-group class="mb-3">
+                  <span cInputGroupText id="basic-addon1">No</span>
+                  <input
+                    aria-describedby="basic-addon1"
+                    aria-label="Rule Group"
+                    cFormControl
+                    placeholder="Rule Number"
+                    type="number"
+                    sizing="sm"
+                  />
+                </c-input-group>
+              </c-col>
+
+              <c-col [sm]="4">
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>Rule Prefix </span>
+                  <input
+                    aria-label="Rule Name prefix"
+                    cFormControl
+                    placeholder="Group name prefix"
+                    sizing="sm"
+                  />
+                </c-input-group>
+              </c-col>
+
+              <c-col [sm]="6">
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>Rule description</span>
+                  <input aria-label="Rule description" cFormControl />
+                </c-input-group>
+              </c-col>
+            </form>
+          </c-card-body>
+        </c-card>
+
+        <c-card>
+          <c-card-header>
+            <c-row>
+              <c-col><b>Rule sequence</b></c-col>
+
+              <c-col class="text-end">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button
+                    cButton
+                    color="success"
+                    variant="outline"
+                    class="me-md-2"
+                    size="sm"
+                    cTooltip="Add new rule sequence"
+                    (click)="addRuleSeqFormGroup()"
+                  >
+                    <svg [cIcon]="icons.cilPlus" size="md"></svg>
+                  </button>
+                </div>
+              </c-col>
+            </c-row>
+          </c-card-header>
+          <c-card-body>
+            <form [formGroup]="ruleSeqForm">
+              <input
+                class="mb-3"
+                aria-describedby="basic-addon1"
+                aria-label="Rule Group"
+                cFormControl
+                placeholder="Rule Group Number"
+                type="number"
+                value="1"
+                sizing="sm"
+                hidden="true"
+              />
+
+              <table
+                cTable
+                [responsive]="true"
+                cAlign="middle"
+                small
+                borderless="true"
+              >
+                <tbody>
+                  <tr
+                    scope="row"
+                    *ngFor="let t of ruleSeq.controls; let i = index"
+                    formArrayName="ruleSeq"
+                  >
+                    <ng-container [formGroupName]="i">
+                      <td>
+                        <input
+                          formControlName="seq"
+                          class="mb-3"
+                          aria-describedby="basic-addon1"
+                          aria-label="Rule Group"
+                          cFormControl
+                          placeholder="Rule Group Number"
+                          type="number"
+                          value="1"
+                          sizing="sm"
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          class="mb-3"
+                          aria-describedby="basic-addon1"
+                          aria-label="Rule CFG Name"
+                          cFormControl
+                          placeholder="Rule CFG Name"
+                          type="text"
+                          disabled
+                          value="CFG_VPP_RULE_001"
+                          sizing="sm"
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          class="mb-3"
+                          aria-describedby="basic-addon1"
+                          aria-label="Success Group"
+                          cFormControl
+                          placeholder="Success group"
+                          type="number"
+                          sizing="sm"
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          class="mb-3"
+                          aria-describedby="basic-addon1"
+                          aria-label="Failed Group"
+                          cFormControl
+                          placeholder="Failed group"
+                          type="number"
+                          sizing="sm"
+                        />
+                      </td>
+                      <td>
+                        <label
+                          cLabel
+                          class="visually-hidden"
+                          for="inlineFormSelectPref"
+                        >
+                          Country
+                        </label>
+                        <select
+                          class="mb-3"
+                          aria-label="Rule type"
+                          cSelect
+                          id="inlineFormSelectPref"
+                          sizing="sm"
+                        >
+                          <option value="D">D</option>
+                          <option value="T">T</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input
+                          class="mb-3"
+                          aria-describedby="basic-addon1"
+                          aria-label="Rule"
+                          cFormControl
+                          placeholder="SPEL Rule"
+                          type="text"
+                          sizing="sm"
+                        />
+                      </td>
+                      <td>
+                        <button
+                          cButton
+                          class="mb-3"
+                          color="danger"
+                          variant="outline"
+                          (click)="removeRuleSeq(i)"
+                        >
+                          <svg [cIcon]="icons.cilTrash" size="sm"></svg>
+                        </button>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-row>
+    </c-container>
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="addRuleGroup.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Generate</button>
+  </c-modal-footer>
+</c-modal>

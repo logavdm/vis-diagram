@@ -1,0 +1,38 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <form cRow  class="g-3 align-items-center" [formGroup]="ruleFilterForm">
+          <c-col [sm]="4">
+            <label cLabel class="visually-hidden" for="inlineFormSelectPref">
+              Country
+            </label>
+            <select cSelect id="inlineFormSelectPref" sizing="sm" formControlName="country" (change)="changeCountry($event)">
+              <option *ngFor="let country of ruleFilterData">{{country.ctrycd}}</option>
+            </select>
+          </c-col>
+          <c-col [sm]="4">
+            <label cLabel class="visually-hidden" for="inlineFormSelectPref">
+              Version
+            </label>
+            <select cSelect id="inlineFormSelectPref" sizing="sm" formControlName="version" (change)="changeVersion($event)">
+              <option *ngFor="let v of arrRuleVersion">{{v?.name}}</option>
+            </select>
+          </c-col>
+          <c-col [sm]="4">
+            <label cLabel class="visually-hidden" for="inlineFormSelectPref" >
+              Rule Category
+            </label>
+            <select cSelect id="inlineFormSelectPref" sizing="sm" formControlName="category">
+              <option *ngFor="let c of arrCategory" >{{c}}</option>
+            </select>
+          </c-col>
+        </form>
+      </c-card-body>
+    <c-card-footer class="text-end">
+        <button cButton type="button" size="sm">Load Rules</button>
+    </c-card-footer>
+    </c-card>
+  </c-col>
+  </c-row>
+<c-row >
